@@ -2,14 +2,14 @@
 #include <iomanip>
 #include <cmath>
 
-bool solve(float **Ab, ssize_t n, float *x, float eps) {
+bool solve(double **Ab, ssize_t n, double *x, double eps) {
     ssize_t i, j;
-    float acc, prev_acc = HUGE_VALF;
+    double acc, prev_acc = HUGE_VALF;
     do {
         acc = 0.0f;
         for (i = 0; i < n; i++) {
-            float denom = Ab[i][i];
-            float new_xi = Ab[i][n] / denom;
+            double denom = Ab[i][i];
+            double new_xi = Ab[i][n] / denom;
             for (j = 0; j < n; j++) {
                 if (i == j)
                     continue;
@@ -26,17 +26,17 @@ bool solve(float **Ab, ssize_t n, float *x, float eps) {
 }
 
 int main() {
-    float **Ab, *x, eps;
+    double **Ab, *x, eps;
     ssize_t n;
 
     std::cin >> n;
     std::cin >> eps;
 
-    Ab = new float*[n];
+    Ab = new double*[n];
     for (auto i = 0; i < n; i++) {
-        Ab[i] = new float[n + 1];
+        Ab[i] = new double[n + 1];
     }
-    x = new float[n];
+    x = new double[n];
 
     for (auto row = 0; row < n; row++) {
         for (auto col = 0; col <= n; col++) { // including vector B

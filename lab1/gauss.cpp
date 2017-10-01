@@ -6,9 +6,9 @@
 //        where Ab is matrix A combined with vector b.
 //        Size of Ab is (n, n+1).
 // Output: x.
-void solve(float **Ab, ssize_t n, float *x) {
+void solve(double **Ab, ssize_t n, double *x) {
     ssize_t base, r, c;
-    float sum;
+    double sum;
 
     // Forward elimination
     for (base = 0; base < n; base++) {
@@ -16,9 +16,9 @@ void solve(float **Ab, ssize_t n, float *x) {
         // optimize by skipping base row.
         c = base;
         size_t leading_row = base;
-        float max_value = Ab[base][base];
+        double max_value = Ab[base][base];
         for (r = base + 1; r < n; r++) {
-            float abs_val = fabs(Ab[r][c]);
+            double abs_val = fabs(Ab[r][c]);
             if (abs_val > max_value) {
                 leading_row = r;
                 max_value = abs_val;
@@ -30,7 +30,7 @@ void solve(float **Ab, ssize_t n, float *x) {
 
         // Eliminate base column
         for (r = base + 1; r < n; r++) {
-            float coef = Ab[r][base] / Ab[base][base];
+            double coef = Ab[r][base] / Ab[base][base];
             for (c = base; c <= n; c++) { // including vector B
                 Ab[r][c] -= coef * Ab[base][c];
             }
@@ -48,16 +48,16 @@ void solve(float **Ab, ssize_t n, float *x) {
 }
 
 int main() {
-    float **Ab, *x;
+    double **Ab, *x;
     ssize_t n;
 
     std::cin >> n;
 
-    Ab = new float*[n];
+    Ab = new double*[n];
     for (auto i = 0; i < n; i++) {
-        Ab[i] = new float[n + 1];
+        Ab[i] = new double[n + 1];
     }
-    x = new float[n];
+    x = new double[n];
 
     for (auto row = 0; row < n; row++) {
         for (auto col = 0; col <= n; col++) { // including vector B
