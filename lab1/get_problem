@@ -1,0 +1,14 @@
+#!/bin/sh
+
+PROBLEM_DIR="$(dirname "$(readlink -f "$0")")/problems/"
+PROBLEM_PATH="$PROBLEM_DIR/$1"
+
+N=($(wc --lines "$PROBLEM_PATH"))
+
+echo $N
+if [ -n "$2" ]
+then
+    echo $2 # echo eps
+fi
+cat "$PROBLEM_PATH" # echo problem
+
