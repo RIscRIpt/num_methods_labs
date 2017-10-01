@@ -1,0 +1,119 @@
+\documentclass[a4paper]{article}
+\usepackage[autostyle]{csquotes}
+\usepackage{fix-cm}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{datetime}
+\usepackage{mathtools}
+\usepackage{marginnote}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{environ}
+% \usepackage[noae]{Sweave}
+
+\geometry{
+    a4paper,
+    top=20mm,
+    right=15mm,
+    bottom=20mm,
+    left=30mm,
+}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\delimitershortfall-1sp
+
+\newcommand\abs[1]{\left|#1\right|}
+\newcommand\norm[1]{\left|\left|#1\right|\right|}
+\newcommand\cond[1]{\text{cond}\left(#1\right)}
+\newcommand{\m}[1]{\ensuremath{\bm{#1}}}
+\newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newenvironment{where}[1][где:]
+    {#1 \begin{tabular}[t]{>{}<{} @{${}{}$}l}}
+    {\end{tabular}\\[\belowdisplayskip]}
+
+\DeclareTextFontCommand{\emph}{\boldmath\bfseries}
+
+\begin{document}
+
+% \input{main-concordance}
+
+\begin{titlepage}
+    \begin{center}
+        \setlength{\parindent}{0cm}
+        \fontsize{16pt}{16pt}\selectfont
+
+        \textbf{ИНСТИТУТ ТРАНСПОРТА И СВЯЗИ}
+
+        \rule{\textwidth}{1pt}
+
+        \vspace*{2.0cm}
+
+        \includegraphics[width=5cm]{tsi_logo}
+
+        \vspace*{2.0cm}
+
+        ФАКУЛЬТЕТ КОМПЬЮТЕРНЫХ НАУК И ТЕЛЕКОММУНИКАЦИЙ
+
+        \vspace*{2.0cm}
+
+        Лабораторная работа №1 \\
+        По дисциплине \\
+        <<Численные методы и прикладное программирование>>
+
+        \vspace*{2.0cm}
+        \fontsize{14pt}{14pt}\selectfont
+        Тема: \\
+        <<Методы решения системы линейных уравнений. \\ Число обусловленности матрицы>>
+
+        \vfill
+        \fontsize{12pt}{12pt}\selectfont
+
+        \begin{flushright}
+            Работу выполнили: \\
+            \vspace*{0.25cm}
+            {\itshape Дзенис Ричард} \\
+            {\itshape Кобелев Денис} \\
+            {\itshape Якушин Владислав} \\
+        \end{flushright}
+
+        \vfill
+        
+        Рига \\ 2017 г.
+    \end{center}
+\end{titlepage}
+
+\section{Формулировка задания}
+\section{Метод исключения Гаусса с ведущим элементом}
+\section{Метод Гаусса-Зейделя}
+\section{Экспериментальное определение числа обусловленности матрицы}
+\section{Выводы}
+
+\end{document}
+
