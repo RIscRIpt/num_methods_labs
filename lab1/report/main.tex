@@ -12,6 +12,8 @@
 \usepackage{nicefrac}
 \usepackage{bm}
 \usepackage{listings}
+\usepackage{bashful}
+\usepackage{pgffor}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -58,6 +60,15 @@
 \newenvironment{where}[1][где:]
     {#1 \begin{tabular}[t]{>{}<{} @{${}{}$}l}}
     {\end{tabular}\\[\belowdisplayskip]}
+
+\lstset{%
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    showstringspaces=false,
+}
 
 \DeclareTextFontCommand{\emph}{\boldmath\bfseries}
 
@@ -161,12 +172,97 @@
     \end{cases} \label{slau:5}
 \end{equation}
 
+\break
+
 \section{Метод исключения Гаусса с ведущим элементом}
+
+\subsection{Листинг}
 \lstinputlisting[language=c++, firstline=5, lastline=49]{../gauss.cpp}
+
+\subsection{Результаты работы алгоритма}
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:1}}
+\bash[stdout]
+../get_problem 1 | ../gauss.elf
+\END
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:2}}
+\bash[stdout]
+../get_problem 2 | ../gauss.elf
+\END
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:5}}
+\bash[stdout]
+../get_problem 5 | ../gauss.elf
+\END
+
 \section{Метод Гаусса-Зейделя}
+
+\subsection{Листинг}
 \lstinputlisting[language=c++, firstline=5, lastline=27]{../gauss-seidel.cpp}
+
+\subsection{Результаты работы алгоритма}
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:1}}
+\bash[stdout]
+../get_problem 1 | ../gauss-seidel.elf
+\END
+\newline
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:3}}
+\bash[stdout]
+../get_problem 3 | ../gauss-seidel.elf
+\END
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:4}}
+\bash[stdout]
+../get_problem 4 | ../gauss-seidel.elf
+\END
+
 \section{Экспериментальное определение числа обусловленности матрицы}
+
+\subsection{Часть листинга для нахождения числа обусловленности}
+\lstinputlisting[language=python, firstline=35, lastline=48]{../find_cond.py}
+
+\subsection{Полученные результаты}
+
+\subsubsection{Полученные результаты для метода Гаусса}
+
+\paragraph{Пример \eqref{slau:1}}
+\bash[stdout]
+../find_cond.py 1 gauss
+\END
+
+\paragraph{Пример \eqref{slau:2}}
+\bash[stdout]
+../find_cond.py 2 gauss
+\END
+
+\paragraph{Пример \eqref{slau:5}}
+\bash[stdout]
+../find_cond.py 5 gauss
+\END
+
+\subsubsection{Полученные результаты для метода Гаусса-Зейделя}
+
+%\paragraph{Пример \eqref{slau:1}}
+%\bash[stdout]
+%../find_cond.py 1 gauss-seidel
+%\END
+
+\paragraph{Пример \eqref{slau:3}}
+\bash[stdout]
+../find_cond.py 3 gauss-seidel
+\END
+
+\paragraph{Пример \eqref{slau:4}}
+\bash[stdout]
+../find_cond.py 4 gauss-seidel
+\END
+
 \section{Выводы}
+
+
 
 \end{document}
 
