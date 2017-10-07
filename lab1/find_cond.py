@@ -41,7 +41,7 @@ def main():
     deltaB = np.zeros(B.shape)
     deltaB[max_B_id] = B[max_B_id] * 0.01
 
-    deltaX = solve(A, B + deltaB) # find deltaX in A * deltaX = B
+    deltaX = solve(A, B + deltaB) # find deltaX in A * deltaX = B + deltaB
 
     # Calculate and print condition number
     print("cond(A) is greater or equals to: ")
