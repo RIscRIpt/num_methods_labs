@@ -48,13 +48,6 @@ int main() {
     bool succeeded = solve(Ab, n, x, eps);
 
     if (succeeded) {
-        for (auto row = 0; row < n; row++) {
-            for (auto col = 0; col <= n; col++) { // including vector B
-                std::cout << std::setw(16) << Ab[row][col];
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
         for (auto i = 0; i < n; i++) {
             std::cout << std::setw(16) << x[i];
         }
