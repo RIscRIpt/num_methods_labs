@@ -1,0 +1,18 @@
+#!/bin/sh
+
+ROOT_DIR="$(dirname "$(readlink -f "$0")")"
+PROBLEM_DIR="$ROOT_DIR/problems/"
+SOLVER="$1"
+PROBLEM_PATH="$PROBLEM_DIR/$2"
+
+N=($(wc --lines "$PROBLEM_PATH"))
+
+(
+    echo $N
+    if [ -n "$3" ]
+    then
+        echo $3 # echo eps
+    fi
+    cat "$PROBLEM_PATH" # echo problem
+) | "$ROOT_DIR/$SOLVER.elf"
+
