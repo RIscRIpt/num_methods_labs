@@ -32,46 +32,18 @@ def main():
         sp_solver = sp.run([solver], input=problem.encode("utf-8"), stdout=sp.PIPE)
         return np.matrix(';'.join(sp_solver.stdout.decode("utf-8").split('\n')[-2].split()))
 
-    X = solve(A, B)
+    X = solve(A, B) # find X in AX=B
 
-    max_B_id = np.argmax(B)
+    max_B_id = np.argmax(B) # find maximal element in vector B
+
+    # create delta B vector with one non-zero element, which
+    # equals to 1% of the maximal element in vector B.
     deltaB = np.zeros(B.shape)
     deltaB[max_B_id] = B[max_B_id] * 0.01
 
-    deltaX = solve(A, B + deltaB)
+    deltaX = solve(A, B + deltaB) # find deltaX in A * deltaX = B
 
-    print("X: ")
-    print(X)
-    print()
-
-    print("dX: ")
-    print(deltaX)
-    print()
-
-    print("B: ")
-    print(B)
-    print()
-
-    print("dB: ")
-    print(deltaB)
-    print()
-
-    print("NX: ")
-    print(norm(X))
-    print()
-
-    print("NdX: ")
-    print(norm(deltaX))
-    print()
-
-    print("NB: ")
-    print(norm(B))
-    print()
-
-    print("NdB: ")
-    print(norm(deltaB))
-    print()
-
+    # Calculate and print condition number
     print("cond(A) is greater or equals to: ")
     print(norm(deltaX) / norm(X) * norm(B) / norm(deltaB))
 
