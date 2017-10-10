@@ -34,18 +34,19 @@ def main():
 
     X = solve(A, B) # find X in AX=B
 
-    max_B_id = np.argmax(B) # find maximal element in vector B
+    # find absolute maximal element in vector B
+    max_B_id = np.argmax(np.abs(B))
 
     # create delta B vector with one non-zero element, which
-    # equals to 1% of the maximal element in vector B.
+    # equals to 1% of the absolute maximal element in vector B.
     deltaB = np.zeros(B.shape)
     deltaB[max_B_id] = B[max_B_id] * 0.01
 
-    deltaX = solve(A, B + deltaB) # find deltaX in A * deltaX = B + deltaB
+    X2 = solve(A, B + deltaB) # find deltaX in A * deltaX = B + deltaB
 
     # Calculate and print condition number
     print("cond(A) is greater or equals to: ")
-    print(norm(deltaX) / norm(X) * norm(B) / norm(deltaB))
+    print(norm(X2 - X) / norm(X) * norm(B) / norm(deltaB))
 
 if __name__ == "__main__":
     main()
