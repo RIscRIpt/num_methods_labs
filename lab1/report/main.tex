@@ -183,17 +183,17 @@
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:1}}
 \bash[stdout]
-../get_problem 1 | ../gauss.elf
+../solve_problem gauss 1
 \END
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:2}}
 \bash[stdout]
-../get_problem 2 | ../gauss.elf
+../solve_problem gauss 2
 \END
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:5}}
 \bash[stdout]
-../get_problem 5 | ../gauss.elf
+../solve_problem gauss 5
 \END
 
 \section{Метод Гаусса-Зейделя}
@@ -201,22 +201,22 @@
 \subsection{Листинг}
 \lstinputlisting[language=c++, firstline=5, lastline=27]{../gauss-seidel.cpp}
 
-\subsection{Результаты работы алгоритма}
+\subsection{Результаты работы алгоритма с точностью $10^{-3}$}
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:1}}
 \bash[stdout]
-../get_problem 1 | ../gauss-seidel.elf
+../solve_problem gauss-seidel 1 0.001
 \END
 \newline
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:3}}
 \bash[stdout]
-../get_problem 3 | ../gauss-seidel.elf
+../solve_problem gauss-seidel 3 0.001
 \END
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:4}}
 \bash[stdout]
-../get_problem 4 | ../gauss-seidel.elf
+../solve_problem gauss-seidel 4 0.001
 \END
 
 \section{Экспериментальное определение числа обусловленности матрицы}
