@@ -3,9 +3,11 @@
 #include <cmath>
 
 bool solve(double **Ab, ssize_t n, double *x, double eps) {
+    int iteration = 0;
     ssize_t i, j;
     double acc, prev_acc = HUGE_VALF;
     do {
+        std::cout << "I = " << iteration << std::endl;
         acc = 0.0f;
         for (i = 0; i < n; i++) {
             double denom = Ab[i][i];
@@ -18,9 +20,16 @@ bool solve(double **Ab, ssize_t n, double *x, double eps) {
             acc = std::fmaxf(acc, fabs(new_xi - x[i]));
             x[i] = new_xi;
         }
+        std::cout << "X = ";
+        for (auto i = 0; i < n; i++) {
+            std::cout << std::setw(16) << x[i];
+        }
+        std::cout << std::endl;
+        std::cout << "ACC = " << acc << std::endl;
         if (acc >= prev_acc)
             return false;
         prev_acc = acc;
+        iteration++;
     } while (acc > eps);
     return true;
 }

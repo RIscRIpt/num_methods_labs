@@ -175,14 +175,10 @@
     \end{cases} \label{slau:5}
 \end{equation}
 
-\break
-
 \section{Метод исключения Гаусса с ведущим элементом}
 
 \subsection{Листинг}
 \lstinputlisting[language=c++, firstline=5, lastline=49]{../gauss.cpp}
-
-\break
 
 \subsection{Результаты работы алгоритма}
 
@@ -211,12 +207,10 @@
 ../solve_problem gauss 5
 \END
 
-\break
-
 \section{Метод Гаусса-Зейделя}
 
 \subsection{Листинг}
-\lstinputlisting[language=c++, firstline=5, lastline=27]{../gauss-seidel.cpp}
+\lstinputlisting[language=c++, firstline=5, lastline=35]{../gauss-seidel.cpp}
 
 \subsection{Результаты работы алгоритма с точностью $10^{-3}$}
 
@@ -247,8 +241,6 @@
 \bash[stdout]
 ../solve_problem gauss-seidel 5 0.001
 \END
-
-\break
 
 \section{Определение невязки}
 \lstinputlisting[language=python, firstline=32, lastline=34]{../find_residual.py}
@@ -297,8 +289,6 @@
 ../find_residual.py 5 gauss-seidel 0.001
 \END
 
-\break
-
 \section{Экспериментальное определение числа обусловленности матрицы}
 
 \subsection{Часть листинга для нахождения числа обусловленности}
@@ -333,7 +323,40 @@
 ../find_cond.py 5 gauss
 \END
 
-\break
+\section{Дополнительные испытания}
+В ходе сдачи лабораторной работы было необходимо провести дополнительные испытания на следующей матрице:
+\begin{align}
+    \begin{cases}
+        x_{11}+ 2x_{12}  +3x_{13} = 10 \\
+        x_{21}+ 3x_{22}  -2x_{23} = 7 \\
+        2x_{31} -x_{32}  +x_{33} = 5
+    \end{cases}
+\end{align}
+
+\paragraph{Решение СЛАУ с помощью метода исключения Гаусса}
+\bash[stdout]
+../solve_problem gauss test
+\END
+
+\paragraph{Решение СЛАУ с помощью метода Гаусса-Зейделя}
+\bash[stdout]
+../solve_problem gauss-seidel test 0.001
+\END
+
+Как можно видеть из результатов, данный алгоритм не сходится. Это обусловлено тем, что для данной СЛАУ не выполняется необходимое условие сходимости.
+
+При преобразовании СЛАУ, путем перестановки третьего и первого уравнения местами, начинает выполнятся условие сходимости:
+\begin{align}
+    \begin{cases}
+        2x_{31} -x_{32}  +x_{33} = 5 \\
+        x_{11}+ 2x_{12}  +3x_{13} = 10 \\
+        x_{21}+ 3x_{22}  -2x_{23} = 7
+    \end{cases}
+\end{align}
+
+\bash[stdout]
+../solve_problem gauss-seidel test2 0.001
+\END
 
 \section{Выводы}
 В ходе выполнения данной лабораторной работы были реализованы два алгоритма нахождения решения СЛАУ на языке C++:
