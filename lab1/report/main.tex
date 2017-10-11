@@ -75,7 +75,6 @@
 \begin{document}
 
 % \input{main-concordance}
-
 \begin{titlepage}
     \begin{center}
         \setlength{\parindent}{0cm}
@@ -120,6 +119,10 @@
         Рига \\ 2017 г.
     \end{center}
 \end{titlepage}
+
+\tableofcontents
+
+\pagebreak
 
 \section{Формулировка задания}
 \begin{itemize}
@@ -179,6 +182,8 @@
 \subsection{Листинг}
 \lstinputlisting[language=c++, firstline=5, lastline=49]{../gauss.cpp}
 
+\break
+
 \subsection{Результаты работы алгоритма}
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:1}}
@@ -191,10 +196,22 @@
 ../solve_problem gauss 2
 \END
 
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:3}}
+\bash[stdout]
+../solve_problem gauss 3
+\END
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:4}}
+\bash[stdout]
+../solve_problem gauss 4
+\END
+
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:5}}
 \bash[stdout]
 ../solve_problem gauss 5
 \END
+
+\break
 
 \section{Метод Гаусса-Зейделя}
 
@@ -209,7 +226,12 @@
 \END
 \newline
 
-В данном примере не выполняется условие сходимости для итерационного метода, что и было успешно обнаружено программой.
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:2}}
+\bash[stdout]
+../solve_problem gauss-seidel 2 0.001
+\END
+
+В первых двух примерах не выполняется условие сходимости для итерационного метода, что и было успешно обнаружено программой.
 
 \subsubsection{Результат работы алгоритма на примере \eqref{slau:3}}
 \bash[stdout]
@@ -220,6 +242,62 @@
 \bash[stdout]
 ../solve_problem gauss-seidel 4 0.001
 \END
+
+\subsubsection{Результат работы алгоритма на примере \eqref{slau:5}}
+\bash[stdout]
+../solve_problem gauss-seidel 5 0.001
+\END
+
+\break
+
+\section{Определение невязки}
+\lstinputlisting[language=python, firstline=32, lastline=34]{../find_residual.py}
+
+\subsection{Полученные результаты для метода исключения Гаусса}
+
+\paragraph{Пример \eqref{slau:1}}
+\bash[stdout]
+../find_residual.py 1 gauss
+\END
+
+\paragraph{Пример \eqref{slau:2}}
+\bash[stdout]
+../find_residual.py 2 gauss
+\END
+
+\paragraph{Пример \eqref{slau:3}}
+\bash[stdout]
+../find_residual.py 3 gauss
+\END
+
+\paragraph{Пример \eqref{slau:4}}
+\bash[stdout]
+../find_residual.py 4 gauss
+\END
+
+\paragraph{Пример \eqref{slau:5}}
+\bash[stdout]
+../find_residual.py 5 gauss
+\END
+
+\subsection{Полученные результаты для метода Гаусса-Зейделя}
+
+\paragraph{Пример \eqref{slau:3}}
+\bash[stdout]
+../find_residual.py 3 gauss-seidel 0.001
+\END
+
+\paragraph{Пример \eqref{slau:4}}
+\bash[stdout]
+../find_residual.py 4 gauss-seidel 0.001
+\END
+
+\paragraph{Пример \eqref{slau:5}}
+\bash[stdout]
+../find_residual.py 5 gauss-seidel 0.001
+\END
+
+\break
 
 \section{Экспериментальное определение числа обусловленности матрицы}
 
@@ -240,10 +318,22 @@
 ../find_cond.py 2 gauss
 \END
 
+\paragraph{Пример \eqref{slau:3}}
+\bash[stdout]
+../find_cond.py 3 gauss
+\END
+
+\paragraph{Пример \eqref{slau:4}}
+\bash[stdout]
+../find_cond.py 4 gauss
+\END
+
 \paragraph{Пример \eqref{slau:5}}
 \bash[stdout]
 ../find_cond.py 5 gauss
 \END
+
+\break
 
 \section{Выводы}
 В ходе выполнения данной лабораторной работы были реализованы два алгоритма нахождения решения СЛАУ на языке C++:
@@ -283,7 +373,7 @@
 \bigskip
 
 В ходе вычисления числа обусловленности Матриц была использована Евклидова норма. За исключением 5-ого примера, все числа обусловленности получились до 10, что означает хорошую обусловленность.
-Число обусловленности матрицы из 5-ого уравнения составила 227109, что явно свидетельствует о плохой обусловленности, так как значение выше 1000. Скорее всего, данный факт и является причиной расхождения результатов метода Гаусса-Зейделя и метода исключений Гаусса при низкой точности.
+Число обусловленности матрицы из 5-ого уравнения составила $\approx 227240$, что явно свидетельствует о плохой обусловленности, так как значение выше 1000. Скорее всего, данный факт и является причиной расхождения результатов метода Гаусса-Зейделя и метода исключений Гаусса при низкой точности.
 
 \end{document}
 

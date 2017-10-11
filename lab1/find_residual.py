@@ -30,10 +30,8 @@ def main():
         return np.matrix(';'.join(sp_solver.stdout.decode("utf-8").split('\n')[-2].split()))
 
     X = solve(A, B)
-    print("X:")
-    print(X.T)
-    print("Residual:")
-    print((B - A * X).T)
+    print("X:", X.T)
+    print("Residual:", (B - A * X).T)
 
 if __name__ == "__main__":
     main()
