@@ -15,8 +15,11 @@ std::ostream& operator<<(std::ostream &os, point &p) {
     return os << '(' << p.x << "; " << p.y << ')';
 }
 
+// Input: points {x, y}, order of approximation
+// Output: lower triangular matrix of coefficients
+// with right-hand side constants
 std::vector<std::vector<double>>
-solve(std::vector<point> &points, size_t order)
+find_coef(std::vector<point> &points, size_t order)
 {
     double coef;
     std::vector<std::vector<double>> result;
@@ -54,7 +57,7 @@ int main() {
         std::cin >> point;
     }
 
-    auto coefficients = solve(points, order);
+    auto coefficients = find_coef(points, order);
     assert(coefficients.size() == order + 1);
     std::cout << coefficients.size() << std::endl;
     for (size_t row = 0; row < order + 1; row++) {
