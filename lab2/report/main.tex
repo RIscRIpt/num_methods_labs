@@ -1,0 +1,198 @@
+\documentclass[a4paper]{article}
+\usepackage[autostyle]{csquotes}
+\usepackage{fix-cm}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{datetime}
+\usepackage{mathtools}
+\usepackage{marginnote}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{bashful}
+\usepackage{pgffor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{environ}
+% \usepackage[noae]{Sweave}
+
+\geometry{
+    a4paper,
+    top=20mm,
+    right=15mm,
+    bottom=20mm,
+    left=30mm,
+}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% \delimitershortfall-1sp
+
+\newcommand\abs[1]{\left|#1\right|}
+\newcommand\norm[1]{\left|\left|#1\right|\right|}
+\newcommand\cond[1]{\text{cond}\left(#1\right)}
+\newcommand{\m}[1]{\ensuremath{\bm{#1}}}
+\newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newenvironment{where}[1][где:]
+    {#1 \begin{tabular}[t]{>{}<{} @{${}{}$}l}}
+    {\end{tabular}\\[\belowdisplayskip]}
+
+\newcolumntype{\l}{@{}l@{}}
+\newcolumntype{\c}{@{}c@{}}
+\newcolumntype{\r}{@{}r@{}}
+
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+\newcolumntype{\L}{@{}L@{}}
+\newcolumntype{\C}{@{}C@{}}
+\newcolumntype{\R}{@{}R@{}}
+
+\newcolumntype{\ML}{>{$\displaystyle}l<{$}}
+\newcolumntype{\MC}{>{$\displaystyle}c<{$}}
+\newcolumntype{\MR}{>{$\displaystyle}r<{$}}
+
+\newcolumntype{\NL}{@{}\ML @{}}
+\newcolumntype{\NC}{@{}\MC @{}}
+\newcolumntype{\NR}{@{}\MR @{}}
+
+\lstset{%
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    showstringspaces=false,
+}
+
+\DeclareTextFontCommand{\emph}{\boldmath\bfseries}
+
+\begin{document}
+
+% \input{main-concordance}
+\begin{titlepage}
+    \begin{center}
+        \setlength{\parindent}{0cm}
+        \fontsize{16pt}{16pt}\selectfont
+
+        \textbf{ИНСТИТУТ ТРАНСПОРТА И СВЯЗИ}
+
+        \rule{\textwidth}{1pt}
+
+        \vspace*{2.0cm}
+
+        \includegraphics[width=5cm]{../../tsi_logo}
+
+        \vspace*{2.0cm}
+
+        ФАКУЛЬТЕТ КОМПЬЮТЕРНЫХ НАУК И ТЕЛЕКОММУНИКАЦИЙ
+
+        \vspace*{2.0cm}
+
+        Лабораторная работа №2 \\
+        По дисциплине \\
+        <<Численные методы и прикладное программирование>>
+
+        \vspace*{2.0cm}
+        \fontsize{14pt}{14pt}\selectfont
+        Тема: \\
+        <<Методы приближения функции. \\ Интерполяция и аппроксимация>>
+
+        \vfill
+        \fontsize{12pt}{12pt}\selectfont
+
+        \begin{flushright}
+            Работу выполнили: \\
+            \vspace*{0.25cm}
+            {\itshape Дзенис Ричард} \\
+            {\itshape Кобелев Денис} \\
+            {\itshape Якушин Владислав} \\
+        \end{flushright}
+
+        \vfill
+
+        Рига \\ 2017 г.
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Формулировка задания}
+\begin{itemize}
+    \item Реализовать программным путём аппроксимацию функции по заданным точкам методом наименьших квадратов (МНК);
+    \item Реализовать программным путём интерполяцию функции по заданным точкам с помощью кубических сплайнов;
+    \item Графически сравнить получившиеся результаты;
+    \item Сделать выводы по реализованным методам.
+\end{itemize}
+
+\begin{equation}
+    y = \sin(5x) \cdot e^x
+\end{equation}
+\begin{where}
+    $x \in [-2; +2]; \quad \Delta x = 0.5$
+\end{where}
+
+\begin{center}
+    \begin{tabular}{\MC|\MC|\MC|\MC|\MC|\MC|\MC|\MC}
+        x & -3.2 & -2.1 & 0.4 & 0.7 & 2 & 2.5 & 2.777 \\
+        \hline
+        y & 10   & -2   & 0   & -7  & 7 & 0   & 0
+    \end{tabular}
+\end{center}
+
+\section{Аппроксимация методом наименьших квадратов}
+
+Аппроксимацию методом МНК можно разбить на 2 этапа:
+\begin{enumerate}
+    \item Построение матрицы коэффициентов СЛАУ согласно универсальной СЛАУ МНК;
+    \item Решение СЛАУ для нахождения аппроксимирующего полинома.
+\end{enumerate}
+
+В силу того, что универсальная СЛАУ для МНК является симметричной, то для экономии памяти можно сохранять только верную или нижнюю треугольную матрицу.
+
+\subsection{Листинги}
+\subsubsection{Листинг построения нижней треугольной матрицы коэффициентов для универсальной СЛАУ МНК}
+\lstinputlisting[language=c++, firstline=18, lastline=46]{../least_squares.cpp}
+
+Для того чтобы воспользоваться уже разработанной программой решения СЛАУ методом исключения Гаусса (в первой лабораторной работе), необходимо вывести всю матрицу целиком, с вектором правой части.
+
+\subsubsection{Листинг вывода СЛАУ}
+\lstinputlisting[language=c++, firstline=60, lastline=70]{../least_squares.cpp}
+
+Далее СЛАУ решается с помощью программы разработанной в ходе первой лабораторной работы.
+
+\subsection{Результаты работы метода}
+
+\section{Кубическая сплайн интерполяция}
+
+\section{Выводы}
+
+\end{document}
+
