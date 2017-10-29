@@ -30,6 +30,7 @@
 \usepackage{array}
 \usepackage[normalem]{ulem}
 \usepackage{environ}
+\usepackage{caption}
 % \usepackage[noae]{Sweave}
 
 \geometry{
@@ -48,6 +49,13 @@
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 % \delimitershortfall-1sp
+
+\newcommand{\includeimage}[2]{
+    \begin{center}
+        \includegraphics[width=\linewidth]{#1}
+        \captionof{figure}{#2}
+    \end{center}
+}
 
 \newcommand\abs[1]{\left|#1\right|}
 \newcommand\norm[1]{\left|\left|#1\right|\right|}
@@ -189,8 +197,22 @@
 Далее СЛАУ решается с помощью программы разработанной в ходе первой лабораторной работы.
 
 \subsection{Результаты работы метода}
+\includeimage{../plots/task1ols3.png}{График задания №1}
+
+\includeimage{../plots/task2ols3.png}{График задания №2}
 
 \section{Кубическая сплайн интерполяция}
+\subsection{Листинг}
+\subsubsection{Листинг функции решения СЛАУ с 3ёх диагональными матрицами коэффициентов}
+\lstinputlisting[language=c++, firstline=42, lastline=60]{../spline.cpp}
+
+\subsubsection{Листинг функции нахождения коэффициентов сплайнов}
+\lstinputlisting[language=c++, firstline=62, lastline=93]{../spline.cpp}
+
+\subsection{Результаты работы метода}
+\includeimage{../plots/task1spline.png}{График сплайн интерполяции для задания №1}
+
+\includeimage{../plots/task2spline.png}{График сплайн интерполяции для задания №2}
 
 \section{Выводы}
 
