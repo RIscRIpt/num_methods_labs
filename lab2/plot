@@ -1,0 +1,49 @@
+#!/bin/sh
+
+function assertNotEmpty() {
+    if [ -z "$2" ]
+    then
+        echo "$1 is not specified! Aborting."
+        exit 1
+    fi
+}
+
+ROOT_DIR="$(dirname "$(readlink -f "$0")")"
+SOLVER="$1"
+POINTS_PATH="$2"
+OUTPUT="$3"
+SHOW="$4"
+
+assertNotEmpty "solver" "$SOLVER"
+assertNotEmpty "path to points" "$POINTS_PATH"
+assertNotEmpty "output image" "$OUTPUT"
+assertNotEmpty "show on/off" "$SHOW"
+
+N=($(wc --lines "$POINTS_PATH"))
+
+if [ "$SOLVER" = "OLS" ]
+then
+    ORDER="$5"
+    (
+        echo $ORDER
+        echo $N
+        cat "$POINTS_PATH" # echo points
+    ) \
+        | "$ROOT_DIR/least_squares.elf" \
+        | ../lab1/gauss.elf \
+        | ./least_squares.R "$OUTPUT"
+elif [ "$SOLVER" = "spline" ]
+then
+    cat "$POINTS_PATH" \
+        | "$ROOT_DIR/spline.elf" \
+        | ./spline.R "$OUTPUT"
+else
+    echo "Unknown solver"
+    exit 1
+fi
+
+if [ "$SHOW" = "show" ]
+then
+    (feh "$OUTPUT" &)
+fi
+

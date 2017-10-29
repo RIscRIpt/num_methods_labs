@@ -1,18 +1,20 @@
 #!/usr/bin/env Rscript
 
+args <- commandArgs(trailingOnly=TRUE)
+outputFile <- args[1]
+
 stdin <- file("stdin", "r")
-splines <- read.table(stdin)
+splines <- invisible(read.table(stdin))
 stopifnot(length(splines) == 5)
 colnames(splines) <- c("x", "a", "b", "c", "d")
 
 xs <- splines[, "x"]
 ys <- splines[, "a"]
 
-X11()
-
 xlim <- c(xs[1], xs[length(xs)])
 ylim <- c(min(ys), max(ys))
 
+png(outputFile)
 plot(0, type='n', axes=TRUE, ann=FALSE, xlim=xlim, ylim=ylim)
 points(xs, ys, col="red", pch=19)
 
@@ -27,5 +29,5 @@ for (i in 1:(nrow(splines) - 1)) {
     curve(spline, from=x_left, to=x_right, col="blue", add=TRUE)
 }
 
-locator(1)
+invisible(dev.off())
 
