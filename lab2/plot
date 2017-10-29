@@ -32,6 +32,7 @@ then
     ) \
         | "$ROOT_DIR/least_squares.elf" \
         | ./linalg_solve.py \
+        | (echo $N && cat "$POINTS_PATH" && cat) \
         | ./least_squares.R "$OUTPUT"
 elif [ "$SOLVER" = "spline" ]
 then
