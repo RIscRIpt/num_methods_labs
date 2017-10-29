@@ -93,12 +93,6 @@ int main() {
             (std::istream_iterator<point>(std::cin)),
             (std::istream_iterator<point>())
             );
-    auto [ymin, ymax] = std::minmax_element(points.begin(), points.end(), point::compare_by_y);
-    std::cout << std::setw(12) << points.front().x << '\t'
-              << std::setw(12) << points.back().x << '\n'
-              << std::setw(12) << ymin->y << '\t'
-              << std::setw(12) << ymax->y << '\n'
-              << std::endl;
     auto table = interpolate(points);
     for (size_t i = 0; i < table.size; i++) {
         std::cout << std::setw(12) << points[i].x << '\t'
@@ -107,7 +101,11 @@ int main() {
                   << std::setw(12) << table.c[i]  << '\t'
                   << std::setw(12) << table.d[i]  << '\n';
     }
-    std::cout << std::flush;
+    std::cout << std::setw(12) << points.back().x << '\t'
+              << std::setw(12) << points.back().y << '\t'
+              << std::setw(12) << 0.0 << '\t'
+              << std::setw(12) << 0.0 << '\t'
+              << std::setw(12) << 0.0 << '\n';
     return 0;
 }
 
