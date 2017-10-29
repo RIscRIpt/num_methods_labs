@@ -38,6 +38,30 @@ then
     cat "$POINTS_PATH" \
         | "$ROOT_DIR/spline.elf" \
         | ./spline.R "$OUTPUT"
+elif [ "$SOLVER" = "both" ]
+then
+    ORDER="$5"
+
+    TMP_POLY=$(mktemp)
+    TMP_SPLINE=$(mktemp)
+
+    (
+        echo $ORDER
+        echo $N
+        cat "$POINTS_PATH" # echo points
+    ) \
+        | "$ROOT_DIR/least_squares.elf" \
+        | ./linalg_solve.py \
+        > "$TMP_POLY"
+
+    cat "$POINTS_PATH" \
+        | "$ROOT_DIR/spline.elf" \
+        > "$TMP_SPLINE"
+
+    ./plot.R "$OUTPUT" "$TMP_POLY" "$TMP_SPLINE"
+
+    rm -f "$TMP_POLY"
+    rm -f "$TMP_SPLINE"
 else
     echo "Unknown solver"
     exit 1
