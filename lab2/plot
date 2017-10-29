@@ -68,6 +68,8 @@ else
     exit 1
 fi
 
+convert "$OUTPUT" -trim "$OUTPUT"
+
 if [ "$SHOW" = "show" ]
 then
     (feh "$OUTPUT" &)
