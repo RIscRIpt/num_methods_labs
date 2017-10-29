@@ -79,7 +79,9 @@ interpolate(std::vector<point> &points)
                 );
     };
     coefs.c[0] = 0;
-    solveTridiagonal(coefs.c, 1, a, b);
+    if (size > 1) {
+        solveTridiagonal(coefs.c, 1, a, b);
+    }
     for (ssize_t i = 0; i < size; i++) {
         coefs.a[i] = points[i].y;
         coefs.d[i] = (coefs.c[i + 1] - coefs.c[i]) / (3 * h(i));
