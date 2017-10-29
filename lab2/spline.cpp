@@ -3,9 +3,11 @@
 #include <vector>
 #include <iterator>
 #include <functional>
+#include <algorithm>
 
 struct point {
     double x, y;
+    static bool compare_by_y(const point &p1, const point &p2);
 };
 
 std::istream& operator>>(std::istream &is, point &p) {
@@ -14,6 +16,10 @@ std::istream& operator>>(std::istream &is, point &p) {
 
 std::ostream& operator<<(std::ostream &os, point &p) {
     return os << '(' << p.x << "; " << p.y << ')';
+}
+
+bool point::compare_by_y(const point &p1, const point &p2) {
+    return p1.y < p2.y;
 }
 
 struct coefficients {
@@ -77,7 +83,7 @@ interpolate(std::vector<point> &points)
     for (ssize_t i = 0; i < size; i++) {
         coefs.a[i] = points[i].y;
         coefs.d[i] = (coefs.c[i + 1] - coefs.c[i]) / (3 * h(i));
-        coefs.b[i] = (points[i + 1].y - points[i].y) / h(i) - (coefs.c[i + 2] + 2 * coefs.c[i + 1]) * h(i) / 3.0;
+        coefs.b[i] = (points[i + 1].y - points[i].y) / h(i) - (coefs.c[i + 1] + 2 * coefs.c[i + 0]) * h(i) / 3.0;
     }
     return coefs;
 }
@@ -87,22 +93,21 @@ int main() {
             (std::istream_iterator<point>(std::cin)),
             (std::istream_iterator<point>())
             );
+    auto [ymin, ymax] = std::minmax_element(points.begin(), points.end(), point::compare_by_y);
+    std::cout << std::setw(12) << points.front().x << '\t'
+              << std::setw(12) << points.back().x << '\n'
+              << std::setw(12) << ymin->y << '\t'
+              << std::setw(12) << ymax->y << '\n'
+              << std::endl;
     auto table = interpolate(points);
     for (size_t i = 0; i < table.size; i++) {
-        std::cout
-            << std::setw(12) << points[i].x << "\t"
-            << std::setw(12) << table.a[i] << "\t"
-            << std::setw(12) << table.b[i] << "\t"
-            << std::setw(12) << table.c[i] << "\t"
-            << std::setw(12) << table.d[i] << "\n";
+        std::cout << std::setw(12) << points[i].x << '\t'
+                  << std::setw(12) << table.a[i]  << '\t'
+                  << std::setw(12) << table.b[i]  << '\t'
+                  << std::setw(12) << table.c[i]  << '\t'
+                  << std::setw(12) << table.d[i]  << '\n';
     }
-    std::cout
-        << std::setw(12) << points.back().x << "\t"
-        << std::setw(12) << points.back().y << "\t"
-        << std::setw(12) << 0 << "\t"
-        << std::setw(12) << 0 << "\t"
-        << std::setw(12) << 0 << "\n";
-    std::cout << std::endl;
+    std::cout << std::flush;
     return 0;
 }
 
