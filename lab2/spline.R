@@ -11,10 +11,15 @@ colnames(splines) <- c("x", "a", "b", "c", "d")
 xs <- splines[, "x"]
 ys <- splines[, "a"]
 
-xlim <- c(xs[1], xs[length(xs)])
-ylim <- c(min(ys), max(ys))
+xlim   <- c(xs[1], xs[length(xs)])
+ylim   <- c(min(ys), max(ys))
+xamp   <- xlim[2] - xlim[1]
+yamp   <- ylim[2] - ylim[1]
+liminc <- 0.1
+xlim   <- c(xlim[1] - xamp * liminc, xlim[2] + xamp * liminc)
+ylim   <- c(ylim[1] - yamp * liminc, ylim[2] + yamp * liminc)
 
-png(outputFile)
+png(outputFile, width=1000, height=1000)
 plot(0, type='n', axes=TRUE, ann=FALSE, xlim=xlim, ylim=ylim)
 points(xs, ys, col="red", pch=19)
 

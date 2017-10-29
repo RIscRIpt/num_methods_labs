@@ -7,7 +7,7 @@ outputFile   <- args[1]
 inputPolynom <- args[2]
 inputSpline  <- args[3]
 
-png(outputFile)
+png(outputFile, width=1000, height=1000)
 
 splines <- invisible(read.table(file(inputSpline, "r")))
 stopifnot(length(splines) == 5)

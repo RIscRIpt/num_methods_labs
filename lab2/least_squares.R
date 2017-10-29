@@ -25,7 +25,7 @@ ylim   <- c(ylim[1] - yamp * liminc, ylim[2] + yamp * liminc)
 
 coefs <- scan(stdin, quiet=TRUE)
 
-png(outputFile)
+png(outputFile, width=1000, height=1000)
 
 polyfx <- as.function(polynomial(coefs))
 
