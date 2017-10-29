@@ -31,7 +31,7 @@ then
         cat "$POINTS_PATH" # echo points
     ) \
         | "$ROOT_DIR/least_squares.elf" \
-        | ../lab1/gauss.elf \
+        | ./linalg_solve.py \
         | ./least_squares.R "$OUTPUT"
 elif [ "$SOLVER" = "spline" ]
 then
