@@ -3,6 +3,7 @@
 function assertNotEmpty() {
     if [ -z "$2" ]
     then
+        echo "Usage: ./plot [OLS|spline|both] <points file> output.png [show|no] {approx. order if OLS}"
         echo "$1 is not specified! Aborting."
         exit 1
     fi
