@@ -1,10 +1,7 @@
-all: least_squares.elf solve3d.elf spline.elf
+all: least_squares.elf spline.elf
 
 
 least_squares.elf: least_squares.cpp
-	$(CXX) -O3 $^ -o $@
-
-solve3d.elf: solve3d.cpp
 	$(CXX) -O3 $^ -o $@
 
 spline.elf: spline.cpp
