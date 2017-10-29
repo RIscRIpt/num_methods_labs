@@ -90,12 +90,18 @@ int main() {
     auto table = interpolate(points);
     for (size_t i = 0; i < table.size; i++) {
         std::cout
-            /* << i + 1 << "\t" */
+            << std::setw(12) << points[i].x << "\t"
             << std::setw(12) << table.a[i] << "\t"
             << std::setw(12) << table.b[i] << "\t"
             << std::setw(12) << table.c[i] << "\t"
             << std::setw(12) << table.d[i] << "\n";
     }
+    std::cout
+        << std::setw(12) << points.back().x << "\t"
+        << std::setw(12) << points.back().y << "\t"
+        << std::setw(12) << 0 << "\t"
+        << std::setw(12) << 0 << "\t"
+        << std::setw(12) << 0 << "\n";
     std::cout << std::endl;
     return 0;
 }
