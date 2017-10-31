@@ -51,7 +51,8 @@ solveTridiagonal(std::vector<double> &x, size_t offset,
     beta[0] = b(0) / a(0,0);
     for (k = 1; k < size; k++) {
         alpha[k] = a(k,k+1) / (a(k,k) - a(k,k-1) * alpha[k-1]);
-        beta[k] = (b(k) - a(k,k-1) * beta[k-1]) / (a(k,k) - a(k,k-1) * alpha[k-1]);
+        beta[k] = (b(k) - a(k,k-1) * beta[k-1]) /
+            (a(k,k) - a(k,k-1) * alpha[k-1]);
     }
     x[k + offset] = beta[k];
     for (; k >= 0; k--) {
@@ -87,7 +88,8 @@ interpolate(std::vector<point> &points)
     for (ssize_t i = 0; i < size; i++) {
         coefs.a[i] = points[i].y;
         coefs.d[i] = (coefs.c[i + 1] - coefs.c[i]) / (3 * h(i));
-        coefs.b[i] = (points[i + 1].y - points[i].y) / h(i) - (coefs.c[i + 1] + 2 * coefs.c[i + 0]) * h(i) / 3.0;
+        coefs.b[i] = (points[i + 1].y - points[i].y) / h(i)
+                   - (coefs.c[i + 1] + 2 * coefs.c[i + 0]) * h(i) / 3.0;
     }
     return coefs;
 }
