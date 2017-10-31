@@ -19,7 +19,7 @@ liminc <- 0.1
 xlim   <- c(xlim[1] - xamp * liminc, xlim[2] + xamp * liminc)
 ylim   <- c(ylim[1] - yamp * liminc, ylim[2] + yamp * liminc)
 
-png(outputFile, width=1000, height=1000)
+png(outputFile, width=900, height=600)
 plot(0, type='n', axes=TRUE, ann=FALSE, xlim=xlim, ylim=ylim)
 points(xs, ys, col="red", pch=19)
 
