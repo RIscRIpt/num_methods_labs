@@ -68,7 +68,7 @@ interpolate(std::vector<point> &points)
         return points[i + 1].x - points[i].x;
     };
     auto a = [&](size_t j, size_t i) -> double {
-        if (j > i) return h(j + 1);
+        if (j > i) return h(j);
         else if (j < i) return h(j + 1);
         else return 2 * (h(j) + h(j + 1));
     };
