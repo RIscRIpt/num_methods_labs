@@ -20,7 +20,7 @@ xlim   <- c(xs[1], xs[length(xs)])
 ylim   <- c(min(ys), max(ys))
 xamp   <- xlim[2] - xlim[1]
 yamp   <- ylim[2] - ylim[1]
-liminc <- 0.1
+liminc <- 0.5
 xlim   <- c(xlim[1] - xamp * liminc, xlim[2] + xamp * liminc)
 ylim   <- c(ylim[1] - yamp * liminc, ylim[2] + yamp * liminc)
 
