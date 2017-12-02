@@ -1,0 +1,317 @@
+\documentclass[a4paper]{article}
+\usepackage[autostyle]{csquotes}
+\usepackage{fix-cm}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{datetime}
+\usepackage{mathtools}
+\usepackage{marginnote}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{bashful}
+\usepackage{pgffor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{environ}
+\usepackage[singlelinecheck=false,justification=raggedleft]{caption}
+% \usepackage[noae]{Sweave}
+
+\geometry{
+    a4paper,
+    top=20mm,
+    right=15mm,
+    bottom=20mm,
+    left=30mm,
+}
+
+\setcounter{secnumdepth}{3}
+
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+% \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% \delimitershortfall-1sp
+
+\setlist[itemize]{noitemsep, topsep=1mm}
+\setlist[enumerate]{nolistsep}
+
+\newcommand{\includeimage}[3]{
+    \begin{center}
+        \includegraphics[max size={\textwidth}{100mm}]{#1}
+        \captionof{figure}{#3}
+        \label{#2}
+    \end{center}
+}
+
+\newcommand\abs[1]{\left|#1\right|}
+\newcommand\norm[1]{\left|\left|#1\right|\right|}
+\newcommand\cond[1]{\text{cond}\left(#1\right)}
+\newcommand{\m}[1]{\ensuremath{\bm{#1}}}
+\newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newenvironment{where}[1][где:]
+    {#1 \begin{tabular}[t]{>{}<{} @{${}{}$}l}}
+    {\end{tabular}\\[\belowdisplayskip]}
+
+\newcolumntype{\l}{@{}l@{}}
+\newcolumntype{\c}{@{}c@{}}
+\newcolumntype{\r}{@{}r@{}}
+
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+\newcolumntype{\L}{@{}L@{}}
+\newcolumntype{\C}{@{}C@{}}
+\newcolumntype{\R}{@{}R@{}}
+
+\newcolumntype{\ML}{>{$\displaystyle}l<{$}}
+\newcolumntype{\MC}{>{$\displaystyle}c<{$}}
+\newcolumntype{\MR}{>{$\displaystyle}r<{$}}
+
+\newcolumntype{\NL}{@{}\ML @{}}
+\newcolumntype{\NC}{@{}\MC @{}}
+\newcolumntype{\NR}{@{}\MR @{}}
+
+\lstset{%
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    showstringspaces=false,
+}
+
+\DeclareTextFontCommand{\emph}{\boldmath\bfseries}
+
+\begin{document}
+
+% \input{main-concordance}
+\begin{titlepage}
+    \begin{center}
+        \setlength{\parindent}{0cm}
+        \fontsize{16pt}{16pt}\selectfont
+
+        \textbf{ИНСТИТУТ ТРАНСПОРТА И СВЯЗИ}
+
+        \rule{\textwidth}{1pt}
+
+        \vspace*{2.0cm}
+
+        \includegraphics[width=5cm]{../../tsi_logo}
+
+        \vspace*{2.0cm}
+
+        ФАКУЛЬТЕТ КОМПЬЮТЕРНЫХ НАУК И ТЕЛЕКОММУНИКАЦИЙ
+
+        \vspace*{2.0cm}
+
+        Лабораторная работа №3 \\
+        По дисциплине \\
+        <<Численные методы и прикладное программирование>>
+
+        \vspace*{2.0cm}
+        \fontsize{14pt}{14pt}\selectfont
+        Тема: \\
+        <<Методы решения нелинейного уравнения>>
+
+        \vfill
+        \fontsize{12pt}{12pt}\selectfont
+
+        \begin{flushright}
+            Работу выполнили: \\
+            \vspace*{0.25cm}
+            {\itshape Дзенис Ричард} \\
+            {\itshape Кобелев Денис} \\
+            {\itshape Якушин Владислав} \\
+        \end{flushright}
+
+        \vfill
+
+        Рига \\ 2017 г.
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Формулировка задания}
+В данной лабораторной работе требуется реализовать два алгоритма решения нелинейного уравнения: метод бисекции и индивидуальный метод.
+
+\section{Выводы}
+
+\pagebreak
+
+\section*{Приложение}
+
+\subsection*{Вывод коэффициентов для метода парабол}
+
+\begin{align*}
+    L_2(x) = y_0l_0(x) + y_1l_1(x) + y_2l_2(x) = 0 \\
+    \\
+    y_0 \cdot \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} \\
+    + y_1 \cdot \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} \\
+    + y_2 \cdot \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} \\
+    = 0 \\
+    \\
+    y_0 \cdot \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} \cdot \frac{(x_1 - x_0)(x_1 - x_2)(x_2 - x_0)(x_2 - x_1)}{(x_1 - x_0)(x_1 - x_2)(x_2 - x_0)(x_2 - x_1)} \\
+    + y_1 \cdot \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} \cdot \frac{(x_0 - x_1)(x_0 - x_2)(x_2 - x_0)(x_2 - x_1)}{(x_0 - x_1)(x_0 - x_2)(x_2 - x_0)(x_2 - x_1)} \\
+    + y_2 \cdot \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} \cdot \frac{(x_0 - x_1)(x_0 - x_2)(x_1 - x_0)(x_1 - x_2)}{(x_0 - x_1)(x_0 - x_2)(x_1 - x_0)(x_1 - x_2)} \\
+    = 0 \\
+    \\
+    y_0 \cdot (x - x_1)(x - x_2) \cdot (x_1 - x_0)(x_1 - x_2)(x_2 - x_0)(x_2 - x_1) \\
+    + y_1 \cdot (x - x_0)(x - x_2) \cdot (x_0 - x_1)(x_0 - x_2)(x_2 - x_0)(x_2 - x_1) \\
+    + y_2 \cdot (x - x_0)(x - x_1) \cdot (x_0 - x_1)(x_0 - x_2)(x_1 - x_0)(x_1 - x_2) \\
+    = 0 \\
+    \\
+    - y_0 \cdot (x - x_1)(x - x_2) \cdot (x_1 - x_0)(x_1 - x_2)^2(x_2 - x_0) \\
+    - y_1 \cdot (x - x_0)(x - x_2) \cdot (x_0 - x_1)(x_0 - x_2)^2(x_2 - x_1) \\
+    - y_2 \cdot (x - x_0)(x - x_1) \cdot (x_0 - x_1)^2(x_0 - x_2)(x_1 - x_2) \\
+    = 0 \\
+    \\
+    - y_0 \cdot (x - x_1)(x - x_2) \cdot (x_0 - x_1)(x_1 - x_2)^2(x_0 - x_2) \\
+    + y_1 \cdot (x - x_0)(x - x_2) \cdot (x_0 - x_1)(x_0 - x_2)^2(x_1 - x_2) \\
+    - y_2 \cdot (x - x_0)(x - x_1) \cdot (x_0 - x_1)^2(x_0 - x_2)(x_1 - x_2) \\
+    = 0 \\
+    \\
+    (x_0 - x_1)(x_1 - x_2)(x_0 - x_2) \cdot \big( \\
+        - y_0 \cdot (x - x_1)(x - x_2) \cdot (x_1 - x_2) \\
+        + y_1 \cdot (x - x_0)(x - x_2) \cdot (x_0 - x_2) \\
+        - y_2 \cdot (x - x_0)(x - x_1) \cdot (x_0 - x_1) \\
+    \big) = 0
+\end{align*}
+Введём следующие обозначения:
+\begin{align*}
+    m = (x_0 - x_1) \\
+    n = (x_1 - x_2) \\
+    k = (x_0 - x_2)
+\end{align*}
+Тогда:
+\begin{align*}
+    - y_0 \cdot (x - x_1)(x - x_2) \cdot n \\
+    + y_1 \cdot (x - x_0)(x - x_2) \cdot k \\
+    - y_2 \cdot (x - x_0)(x - x_1) \cdot m \\
+    = 0 \\
+    \\
+    - y_0 \cdot (x^2 - xx_2 - xx_1 + x_1x_2) \cdot n \\
+    + y_1 \cdot (x^2 - xx_2 - xx_0 + x_0x_2) \cdot k \\
+    - y_2 \cdot (x^2 - xx_1 - xx_0 + x_0x_1) \cdot m \\
+    = 0 \\
+    \\
+    - y_0 \cdot (x^2 - x(x_2 + x_1) + x_1x_2) \cdot n \\
+    + y_1 \cdot (x^2 - x(x_2 + x_0) + x_0x_2) \cdot k \\
+    - y_2 \cdot (x^2 - x(x_1 + x_0) + x_0x_1) \cdot m \\
+    = 0
+\end{align*}
+Введём следующие обозначения: \\
+\begin{center}
+    \begin{tabular}{CC}
+        \begin{matrix}
+            e = x_2 + x_1 \\
+            f = x_2 + x_0 \\
+            g = x_1 + x_0
+        \end{matrix}
+        &
+        \begin{matrix}
+            o = x_1x_2 \\
+            p = x_0x_2 \\
+            q = x_0x_1
+        \end{matrix}
+    \end{tabular}
+\end{center}
+Тогда:
+\begin{align*}
+    - y_0 \cdot (x^2 - xe + o) \cdot n \\
+    + y_1 \cdot (x^2 - xf + p) \cdot k \\
+    - y_2 \cdot (x^2 - xg + q) \cdot m \\
+    = 0 \\
+    \\
+    (-y_0n + y_1k - y_2m)x^2 \\
+    - (-y_0ne + y_1kf - y_2mg)x \\
+    + (-y_0no + y_1kp - y_2mq) \\
+    = 0 \\
+\end{align*}
+Введём следующие обозначения:
+\begin{align*}
+    u = y_0n \\
+    v = y_1k \\
+    w = y_2m
+\end{align*}
+\begin{align*}
+    a = -u + v - w \\
+    b = -ue + vf - wg \\
+    c = -uo + vp - wq \\
+\end{align*}
+
+Далее решается квадратное уравнение, при условии $a \neq 0$.
+\begin{align*}
+    ax^2 - bx + c = 0
+\end{align*}
+\begin{align*}
+    x_{1,2} = \frac{b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{align*}
+
+В случае $a = 0$, уравнение -- линейное, и принимает вид:
+\begin{align*}
+    -bx + c = 0 \\
+    x = \frac{c}{b}
+\end{align*}
+
+\subsection*{Вывод коэффициентов для метода парабол (версия 2)}
+
+\begin{align*}
+    L_2(x) = y_0l_0(x) + y_1l_1(x) + y_2l_2(x) = 0 \\
+    \\
+    y_0 \cdot \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} \\
+    + y_1 \cdot \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} \\
+    + y_2 \cdot \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} \\
+    = 0
+\end{align*}
+
+Каждую из дробей с коэффициентом $y_i$ можно представить как квадратное уравнение:
+\begin{align*}
+    y_0 \cdot \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} = y_0 \cdot \frac{x^2 - x(x_1 + x_2) + x_1x_2}{(x_0 - x_1)(x_0 - x_2)} = a_0x^2 + b_0x + c_0, \text{где}
+    \begin{cases}
+        a_0 = \displaystyle\frac{y_0}{(x_0 - x_1)(x_0 - x_2)} \\
+        \\
+        b_0 = \displaystyle\frac{y_0(x_1 + x_2)}{(x_0 - x_1)(x_0 - x_2)} \\
+        \\
+        c_0 = \displaystyle\frac{y_0x_1x_2}{(x_0 - x_1)(x_0 - x_2)}
+    \end{cases}
+\end{align*}
+
+Аналогично можно проделать для дробей при коэффициентах $y_1$ и $y_2$.
+Тогда исходное уравнение с тремя дробями можно представить в виде следующего квадратного уравнения:
+\begin{equation*}
+    Ax^2 + Bx + C = 0
+\end{equation*}
+где:
+\begin{align*}
+    A &= a_0 + a_1 + a_2 \\
+    B &= b_0 + b_1 + b_2 \\
+    C &= c_0 + c_1 + c_2
+\end{align*}
+
+\end{document}
+
