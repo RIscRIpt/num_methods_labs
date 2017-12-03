@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ ! $# -eq 5 ]
+then
+    echo "Usage: $0 [bisect/parab] \"equation\" from to epsilon"
+    exit
+fi
+
+if [ "$1" != "bisect" ] && [ "$1" != "parab" ]
+then
+    echo "Invalid method: $1"
+    exit
+fi
+
+echo "double f(const double x) { return ($2); }" > function.h
+
+echo "Compiling ..."
+g++ -std=c++17 $1.cpp -o $1.elf
+if [ ! $? -eq 0 ]
+then
+    echo "Failed to compile."
+    exit
+fi
+
+echo "[$1] \"$2\" ($3; $4) ~ $5:"
+./$1.elf "$3" "$4" "$5"
+if [ ! $? -eq 0 ]
+then
+    echo "No roots found."
+    exit
+fi
+
