@@ -32,6 +32,7 @@
 \usepackage{array}
 \usepackage[normalem]{ulem}
 \usepackage{environ}
+\usepackage{arydshln}
 \usepackage[singlelinecheck=false,justification=raggedleft]{caption}
 % \usepackage[noae]{Sweave}
 
@@ -100,6 +101,7 @@
     commentstyle=\color{green}\ttfamily,
     morecomment=[l][\color{magenta}]{\#},
     showstringspaces=false,
+    numbers=left,
 }
 
 \DeclareTextFontCommand{\emph}{\boldmath\bfseries}
@@ -168,6 +170,72 @@
     \end{tabularx}
 \end{center}
 Так же, для некоторых задач будет необходимо предусмотреть смещение функции по оси Y, поэтому для создания более универсальной реализации, требуется ввести и этот параметр.
+
+\pagebreak
+
+\section{Поиск корней методом бисекции}
+В данной лабораторной работе была разработана модификация метода половинного деления, которая способна находить абсолютно все корни на заданном интервале $(\mathrm{left}; \mathrm{right})$. Это достигается тем, что после нахождения очередного корня, в список интервалов для проверки добавляется два следующих интервала:
+\begin{itemize}
+    \item $(\mathrm{oleft}; \mathrm{middle} - \varepsilon)$, и
+    \item $(\mathrm{middle} + \varepsilon; \mathrm{oright})$.
+\end{itemize}
+\begin{where}
+    $\mathrm{oleft}$ &-- исходная левая граница интервала; \\
+    $\mathrm{oright}$ &-- исходная правая граница интервала; \\
+    $\mathrm{middle}$ &-- найденный корень.
+\end{where}
+\lstinputlisting[language=c++]{../bisect.cpp}
+Основная логика метода бисекции располагается на строчках 24-31.
+
+Также можно заметить, что отсутствует начальная проверка на наличие корней в интервале, это делается из расчёта на то, что количество корней может быть чётное на заданном интервале.
+
+Наконец, в случае если метод половинного деления <<ушёл>> в исходную левую или правую границу, то найденный корень считается <<ложным>> и отбрасывается.
+
+\subsection{Результаты работы метода}
+\includeimage{../plots/bisect_4.png}{fig:bisect_4}{График функции $e^{2x} \cdot \sin(x) - 18$ на интервале $[0; \nicefrac{\pi}{2}]$.}
+\includeimage{../plots/bisect_9.png}{fig:bisect_9}{График функции $x^2 + \sin(x)$ на интервале $[-2; +2]$.}
+
+\begin{center}
+    \begin{tabular}{CCRC}
+        \text{Функция} & \text{Точность} & \text{Найденные корни} & \text{Число итераций} \\
+        \hline
+        \multirow{4}{*}{$e^{2x} \cdot \sin(x) - 18$} & 10^{-2} & 1.45348 & 8 \\
+                                                     & 10^{-4} & 1.44897 & 14 \\
+                                                     & 10^{-6} & 1.44891 & 21 \\
+                                                     & 10^{-9} & 1.44891 & 31 \\
+        \hline
+        \multirow{8}{*}{$x^2 + \sin(x)$} & \multirow{2}{*}{$10^{-2}$} & -0.882812 & 9 \\
+                                         &                            & -0.0031134 & 9 \\
+        \cdashline{2-4}
+        & \multirow{2}{*}{$10^{-4}$} & -0.87677 & 16 \\
+        &                            & 7.87441 \cdot 10^{-5} & 15 \\
+        \cdashline{2-4}
+        & \multirow{2}{*}{$10^{-6}$} & -0.876727 & 22 \\
+        &                            & 6.58521 \cdot 10^{-7} & 22 \\
+        \cdashline{2-4}
+        & \multirow{2}{*}{$10^{-9}$} & -0.876726 & 32 \\
+        &                            & 2.85042 \cdot 10^{-10} & 32 \\
+        \hline
+    \end{tabular}
+\end{center}
+
+Во всех случаях число итераций совпало с теоретическим числом итераций (с точностью до единицы), рассчитанным по формуле:
+\begin{equation}
+    k = \log_2{\frac{\abs{b-a}}{\varepsilon}}
+\end{equation}
+\begin{center}
+    \begin{tabular}{|C|C|}
+        \hline
+        \varepsilon & k \\
+        \hline
+        10^{-2} & 8.643856 \\
+        10^{-4} & 15.28771 \\
+        10^{-6} & 21.93157 \\
+        10^{-9} & 31.89735 \\
+        \hline
+    \end{tabular}
+\end{center}
+
 
 \section{Выводы}
 
@@ -305,7 +373,7 @@
     \begin{cases}
         a_0 = \displaystyle\frac{y_0}{(x_0 - x_1)(x_0 - x_2)} \\
         \\
-        b_0 = \displaystyle\frac{y_0(x_1 + x_2)}{(x_0 - x_1)(x_0 - x_2)} \\
+        b_0 = -\displaystyle\frac{y_0(x_1 + x_2)}{(x_0 - x_1)(x_0 - x_2)} \\
         \\
         c_0 = \displaystyle\frac{y_0x_1x_2}{(x_0 - x_1)(x_0 - x_2)}
     \end{cases}
