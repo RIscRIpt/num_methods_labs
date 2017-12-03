@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! $# -eq 5 ]
+if [ $# -lt 5 ]
 then
-    echo "Usage: $0 [bisect/parab] \"equation\" from to epsilon"
+    echo "Usage: $0 [bisect/parab] \"equation\" from to epsilon {plot.png}"
     exit
 fi
 
@@ -22,11 +22,24 @@ then
     exit
 fi
 
+PLOT_OUTPUT="$1.png"
+if [ ! -z "$6" ]
+then
+    PLOT_OUTPUT="$6"
+fi
+
 echo "[$1] \"$2\" ($3; $4) ~ $5:"
-./$1.elf "$3" "$4" "$5"
+./$1.elf "$3" "$4" "$5" | ./plot.R "$2" "$3" "$4" "$PLOT_OUTPUT"
 if [ ! $? -eq 0 ]
 then
     echo "No roots found."
     exit
+fi
+
+convert "$PLOT_OUTPUT" -trim "$PLOT_OUTPUT"
+
+if [ -z "$6" ]
+then
+    (feh "$PLOT_OUTPUT" &)
 fi
 
