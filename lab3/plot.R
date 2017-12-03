@@ -19,7 +19,7 @@ roots <- scan(stdin, quiet=TRUE)
 
 png(output, width=900, height=600)
 
-curve(func, left, right, ylab=args[1])
+curve(func, left, right, ylab=args[1], n=1001)
 points(roots, func(roots), pch=19, col="red")
 abline(h=0, col="gray")
 abline(v=roots, col="gray")
