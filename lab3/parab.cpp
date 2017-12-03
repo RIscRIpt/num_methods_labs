@@ -1,6 +1,12 @@
 #include "common.h"
 
-roots find_roots(std::function<double(double)> f, double left, double right, const double epsilon) {
+roots find_roots(
+        std::function<double(double)> f,
+        double left,
+        double right,
+        const double epsilon
+        )
+{
     roots results;
     std::vector<std::pair<double, double>> intervals;
 
@@ -13,6 +19,8 @@ roots find_roots(std::function<double(double)> f, double left, double right, con
         left = oleft;
         right = oright;
 
+        double prev_middle;
+        bool has_root = true;
         size_t iterations = 0;
         double middle = left / 2 + right / 2;
         do {
@@ -54,8 +62,12 @@ roots find_roots(std::function<double(double)> f, double left, double right, con
             double X;
             if (left <= X1 && X1 <= right) {
                 X = X1;
-            } else {
+            } else if (left <= X2 && X2 <= right) {
                 X = X2;
+            } else {
+                // No root can be found!
+                has_root = false;
+                break;
             }
 
             // Choose what to replace (left, or right?)
@@ -64,15 +76,18 @@ roots find_roots(std::function<double(double)> f, double left, double right, con
             } else {
                 right = middle;
             }
+            prev_middle = middle;
             middle = X;
 
             iterations++;
-        } while (right - left > epsilon /*&& fabs(f(right) - f(left)) > epsilon*/);
+        } while (fabs(middle - prev_middle) > epsilon);
 
-        if (middle - oleft > epsilon
-        && oright - middle > epsilon) {
-            intervals.emplace_back(std::make_pair(oleft, middle));
-            intervals.emplace_back(std::make_pair(middle, oright));
+        if (has_root
+                && middle - oleft > epsilon
+                && oright - middle > epsilon)
+        {
+            intervals.emplace_back(std::make_pair(oleft, middle - epsilon));
+            intervals.emplace_back(std::make_pair(middle + epsilon, oright));
         } else {
             continue;
         }
