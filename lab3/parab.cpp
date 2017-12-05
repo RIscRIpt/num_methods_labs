@@ -19,6 +19,8 @@ roots find_roots(
         left = oleft;
         right = oright;
 
+        std::cerr << "\nInterval: " << left << "; " << right << '\n';
+
         double prev_middle;
         bool has_root = true;
         size_t iterations = 0;
@@ -80,6 +82,9 @@ roots find_roots(
             middle = X;
 
             iterations++;
+
+            std::cerr << '[' << iterations << ']'
+                << '\t' << fabs(middle - prev_middle) << '\t' << middle << '\n';
         } while (fabs(middle - prev_middle) > epsilon);
 
         if (has_root

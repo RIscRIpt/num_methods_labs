@@ -19,6 +19,8 @@ roots find_roots(
         left = oleft;
         right = oright;
 
+        std::cerr << "\nInterval: " << left << "; " << right << '\n';
+
         size_t iterations = 0;
         double middle;
         do {
@@ -28,6 +30,8 @@ roots find_roots(
             else
                 left = middle;
             iterations++;
+            std::cerr << '[' << iterations << ']'
+                << '\t' << right - left << '\t' << middle << '\n';
         } while (right - left > epsilon);
         
         if (middle - oleft > epsilon

@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
     double right = atof(argv[2]);
     double epsilon = atof(argv[3]);
     auto results = find_roots(f, left, right, epsilon);
+    std::cerr << "\nRoots:\n";
     for (auto r : results) {
         std::cout << r.value << '\n';
         std::cerr << '[' << r.iterations << ']' << '\t' << r.value << '\n';
