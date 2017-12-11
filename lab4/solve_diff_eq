@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [ ! $# -eq 7 ]
+then
+    echo "Usage: $0 method \"equation\" [tmp/plot.png] from to step start_condition"
+    exit
+fi
+
+METHOD="$1"
+FUNCTION="$2"
+PLOT_OUTPUT="$3"
+FROM="$4"
+TO="$5"
+STEP="$6"
+START="$7"
+
+if [ ! -f "$METHOD.cpp" ]
+then
+    echo "Invalid method: $METHOD"
+    exit
+fi
+
+echo "double f(const double t, const double y) { return ($2); }" > function.h
+
+echo "Compiling ..."
+g++ -g -std=c++17 "$METHOD.cpp" -o "$METHOD.elf"
+if [ ! $? -eq 0 ]
+then
+    echo "Failed to compile."
+    exit
+fi
+
+PLOT_IS_TMP=0
+if [ "$PLOT_OUTPUT" == "tmp" ]
+then
+    PLOT_OUTPUT=$(mktemp)
+    PLOT_IS_TMP=1
+fi
+
+echo "[$METHOD] \"$FUNCTION\" ($FROM; $TO) : $STEP"
+./$METHOD.elf "$FROM" "$TO" "$STEP" "$START" | tee /dev/tty | ./plot.R "$FUNCTION" "$PLOT_OUTPUT"
+
+convert "$PLOT_OUTPUT" -trim "$PLOT_OUTPUT"
+
+if [ $PLOT_IS_TMP -eq 0 ]
+then
+    (feh "$PLOT_OUTPUT" &)
+else
+    ( ((feh "$PLOT_OUTPUT") && (rm "$PLOT_OUTPUT")) & )
+fi
+
