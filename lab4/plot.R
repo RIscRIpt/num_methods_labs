@@ -32,8 +32,8 @@ lines(data, lty=1, col='blue')
 
 real.trimmed <- approx(real[,1], real[,2], xout=data[,1])$y
 
-err.ylim <- min(1, max(head(real.trimmed - data[,2], -1)))
-plot(x=head(data[,1], -1), y=head(real.trimmed-data[,2], -1), type='l', lty=1, xlab="t", ylab="delta y", ylim=c(-err.ylim, err.ylim))
+err.ylim <- min(100, max(abs(head(real.trimmed - data[,2], -1))))
+plot(x=head(data[,1], -1), y=head(data[,2]-real.trimmed, -1), type='l', lty=1, xlab="t", ylab="delta y", ylim=c(-err.ylim, err.ylim))
 
 invisible(dev.off())
 
