@@ -1,0 +1,181 @@
+\documentclass[a4paper]{article}
+\usepackage[autostyle]{csquotes}
+\usepackage{fix-cm}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{datetime}
+\usepackage{mathtools}
+\usepackage{marginnote}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{bashful}
+\usepackage{pgffor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\usepackage{environ}
+\usepackage{arydshln}
+\usepackage[singlelinecheck=false,justification=raggedleft]{caption}
+% \usepackage[noae]{Sweave}
+
+\geometry{
+    a4paper,
+    top=20mm,
+    right=15mm,
+    bottom=20mm,
+    left=30mm,
+}
+
+\setcounter{secnumdepth}{3}
+
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+% \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% \delimitershortfall-1sp
+
+\setlist[itemize]{noitemsep, topsep=1mm}
+\setlist[enumerate]{nolistsep}
+
+\newcommand{\includeimage}[3]{
+    \begin{center}
+        \includegraphics[max size={\linewidth}{100mm}]{#1}
+        \captionof{figure}{#3}
+        \label{#2}
+    \end{center}
+}
+
+\newcommand\abs[1]{\left|#1\right|}
+\newcommand\norm[1]{\left|\left|#1\right|\right|}
+\newcommand\cond[1]{\text{cond}\left(#1\right)}
+\newcommand{\m}[1]{\ensuremath{\bm{#1}}}
+\newcommand\eqdef{\mathrel{\stackrel{\makebox[0pt]{\mbox{\normalfont\tiny def}}}{=}}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newenvironment{where}[1][где:]
+    {#1 \begin{tabular}[t]{>{}<{} @{${}{}$}l}}
+    {\end{tabular}\\[\belowdisplayskip]}
+
+\newcolumntype{\l}{@{}l@{}}
+\newcolumntype{\c}{@{}c@{}}
+\newcolumntype{\r}{@{}r@{}}
+
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+\newcolumntype{\L}{@{}L@{}}
+\newcolumntype{\C}{@{}C@{}}
+\newcolumntype{\R}{@{}R@{}}
+
+\newcolumntype{\ML}{>{$\displaystyle}l<{$}}
+\newcolumntype{\MC}{>{$\displaystyle}c<{$}}
+\newcolumntype{\MR}{>{$\displaystyle}r<{$}}
+
+\newcolumntype{\NL}{@{}\ML @{}}
+\newcolumntype{\NC}{@{}\MC @{}}
+\newcolumntype{\NR}{@{}\MR @{}}
+
+\lstset{%
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#},
+    showstringspaces=false,
+    numbers=left,
+}
+
+\DeclareTextFontCommand{\emph}{\boldmath\bfseries}
+
+\begin{document}
+
+% \input{main-concordance}
+\begin{titlepage}
+    \begin{center}
+        \setlength{\parindent}{0cm}
+        \fontsize{16pt}{16pt}\selectfont
+
+        \textbf{ИНСТИТУТ ТРАНСПОРТА И СВЯЗИ}
+
+        \rule{\textwidth}{1pt}
+
+        \vspace*{2.0cm}
+
+        \includegraphics[width=5cm]{../../tsi_logo}
+
+        \vspace*{2.0cm}
+
+        ФАКУЛЬТЕТ КОМПЬЮТЕРНЫХ НАУК И ТЕЛЕКОММУНИКАЦИЙ
+
+        \vspace*{2.0cm}
+
+        Лабораторная работа №4 \\
+        По дисциплине \\
+        <<Численные методы и прикладное программирование>>
+
+        \vspace*{2.0cm}
+        \fontsize{14pt}{14pt}\selectfont
+        Тема: \\
+        <<Численные методы решения дифференциальных уравнений \\ первого порядка>>
+
+        \vfill
+        \fontsize{12pt}{12pt}\selectfont
+
+        \begin{flushright}
+            Работу выполнили: \\
+            \vspace*{0.25cm}
+            {\itshape Дзенис Ричард} \\
+            {\itshape Кобелев Денис} \\
+            {\itshape Якушин Владислав} \\
+        \end{flushright}
+
+        \vfill
+
+        Рига \\ 2017 г.
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Формулировка задания}
+В данной лабораторной работе требуется реализовать два метода решения дифференциальных уравнений: метод Эйлера и индивидуальный метод (метод Рунге-Кутты 4-ого порядка). Само дифференциальное уравнение выдается преподавателем во время проведения лабораторных работ. Для того чтобы реализовать алгоритмы, требуется предусмотреть ряд входных параметров.
+
+\section{Метод Эйлера}
+\lstinputlisting[language=c++]{../euler.cpp}
+
+\subsection{Результаты работы метода}
+%\includeimage{../plots/bisect_4.png}{fig:bisect_4}{График функции $e^{2x} \cdot \sin(x) - 18$ на интервале $[0; \nicefrac{\pi}{2}]$.}
+
+\section{Метод Рунге-Кутты 4-ого порядка}
+\lstinputlisting[language=c++]{../runkut.cpp}
+
+\subsection{Результаты работы метода}
+
+\pagebreak
+
+\section{Выводы}
+
+\end{document}
+
