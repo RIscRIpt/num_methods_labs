@@ -27,10 +27,13 @@ real <- ode(start, seq(left, right, (right - left) / 1e5), func, list())
 png(output, width=900, height=600)
 par(mfrow=c(1, 2))
 
-plot(data, type='l', lty=1, col='blue', xlab="t", ylab="y")
-lines(real, lty=2, col='red')
+plot(x=real[,1], y=real[,2], type='l', lty=2, col='red', xlab='t', ylab='y')
+lines(data, lty=1, col='blue')
 
-# plot(real - data, type='l', lty=1, xlab="t", ylab="delta y")
+real.trimmed <- approx(real[,1], real[,2], xout=data[,1])$y
+
+err.ylim <- min(1, max(head(real.trimmed - data[,2], -1)))
+plot(x=head(data[,1], -1), y=head(real.trimmed-data[,2], -1), type='l', lty=1, xlab="t", ylab="delta y", ylim=c(-err.ylim, err.ylim))
 
 invisible(dev.off())
 
