@@ -1,7 +1,11 @@
 #include "common.h"
 
-std::vector<point> solve(FTY f, double left, double right, double step, double start) {
-    std::vector<point> points { {left, start} };
+std::vector<point> solve(
+        FTY f, double y0,
+        double left, double right,
+        double step)
+{
+    std::vector<point> points { {left, y0} };
     for (double t = left + step; t < right + step; t += step) {
         auto [t_k, y_k] = points.back();
         auto f_1 = f(t_k, y_k);

@@ -9,5 +9,5 @@ using FTY = std::function<double(const double, const double)>;
 
 struct point { double t, y; };
 
-std::vector<point> solve(FTY f, double left, double right, double step, double start);
+std::vector<point> solve(FTY f, double y0, double left, double right, double step);
 

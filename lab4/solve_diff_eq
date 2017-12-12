@@ -2,17 +2,17 @@
 
 if [ ! $# -eq 7 ]
 then
-    echo "Usage: $0 method \"equation\" [tmp/plot.png] from to step start_condition"
+    echo "Usage: $0 method \"equation\" [tmp/plot.png] start_condition from to step"
     exit
 fi
 
 METHOD="$1"
 FUNCTION="$2"
 PLOT_OUTPUT="$3"
-FROM="$4"
-TO="$5"
-STEP="$6"
-START="$7"
+START="$4"
+FROM="$5"
+TO="$6"
+STEP="$7"
 
 if [ ! -f "$METHOD.cpp" ]
 then
@@ -38,7 +38,7 @@ then
 fi
 
 echo "[$METHOD] \"$FUNCTION\" ($FROM; $TO) : $STEP"
-./$METHOD.elf "$FROM" "$TO" "$STEP" "$START" | tee /dev/tty | ./plot.R "$FUNCTION" "$PLOT_OUTPUT"
+./$METHOD.elf "$START" "$FROM" "$TO" "$STEP" | tee /dev/tty | ./plot.R "$FUNCTION" "$PLOT_OUTPUT"
 
 convert "$PLOT_OUTPUT" -trim "$PLOT_OUTPUT"
 
