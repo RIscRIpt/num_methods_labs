@@ -14,7 +14,7 @@ std::vector<point> solve(
         auto f_4 = f(t, y_k + step * f_3);
         points.emplace_back(point{
                 t,
-                y_k + step / 6.0 * (f_1 + 2 * f_2 + 2 * f_3 + f_4)
+                y_k + step / 6.0 * (f_1 + 4 * f_2 + f_4)
                 });
     }
     return points;

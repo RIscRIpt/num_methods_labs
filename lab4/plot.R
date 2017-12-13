@@ -27,7 +27,7 @@ real <- ode(start, seq(left, right, (right - left) / 1e5), func, list())
 png(output, width=900, height=600)
 par(mfrow=c(1, 2))
 
-plot(x=real[,1], y=real[,2], type='l', lty=2, col='red', xlab='t', ylab='y')
+plot(x=real[,1], y=real[,2], type='l', lty=2, lwd=3, col='red', xlab='t', ylab='y')
 lines(data, lty=1, col='blue')
 
 real.trimmed <- approx(real[,1], real[,2], xout=data[,1])$y
